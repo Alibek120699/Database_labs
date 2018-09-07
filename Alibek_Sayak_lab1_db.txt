@@ -1,0 +1,27 @@
+create database lab1;
+
+create table users(id serial, firstname varchar(50), lastname varchar(50));
+select * from users;
+
+alter table users add column isadmin integer;
+select * from users;
+
+alter table users alter column isadmin set data type boolean using isadmin::boolean;
+insert into users (id, firstname, lastname, isadmin) values (1, 'Name', 'Surname', true);
+select * from users;
+
+alter table users alter column isadmin set default false;
+insert into users (id, firstname, lastname) values (2, 'Name2', 'Surname2');
+select * from users;
+
+alter table users add constraint check_key primary key(id);
+insert into users (id, firstname, lastname) values (3, 'Name3', 'Surname3');
+insert into users (firstname, lastname) values ('Name4', 'Surname4');
+select * from users;
+
+create table tasks(id serial primary key, name varchar(50), user_id integer);
+insert into tasks(id, name, user_id) values (1, 'Task1', 31);
+select * from tasks;
+
+drop table tasks restrict;
+drop database lab1;
