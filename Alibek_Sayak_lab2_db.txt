@@ -1,0 +1,53 @@
+CREATE DATABASE lab2;
+
+CREATE TABLE countries(country_id SERIAL PRIMARY KEY,
+country_name VARCHAR(30), region_id INT, population INT);
+
+SELECT * FROM countries;
+INSERT INTO countries VALUES (1, 'England', 15, 53000000);
+
+INSERT INTO countries (country_id, country_name) VALUES (2, 'Canada');
+
+UPDATE countrIes SET region_id=NULL
+RETURNING *;
+
+INSERT INTO countries (country_name, region_id, population)
+VALUES ('Turkey', 12, 79000000),
+       ('China', 5, 1379000000),
+       ('Korea', 7, 51250000);
+SELECT * FROM countries;
+
+ALTER TABLE countries
+    ALTER COLUMN country_name SET DEFAULT 'Kazakhstan';
+
+INSERT INTO countries(country_name) VALUES (DEFAULT);
+
+INSERT INTO countries VALUES (DEFAULT);
+
+CREATE TABLE countries_new(LIKE countries);
+SELECT * FROM countries_new;
+
+INSERT INTO countries_new
+SELECT * FROM countries;
+
+SELECT * FROM countries_new;
+
+UPDATE countries_new SET region_id = 1 WHERE region_id is NULL;
+
+UPDATE countries_new SET population = population + (population*0.1)
+RETURNING country_name, population AS "New Population";
+
+INSERT INTO countries(population) VALUES (9000);
+DELETE FROM countries WHERE population < 100000
+RETURNING  *;
+
+DELETE FROM countries_new
+AS cnew USING countries AS c
+WHERE cnew.country_id=c.country_id
+RETURNING *;
+
+DELETE FROM countries
+RETURNING *;
+
+SELECT * FROM countries;
+SELECT * FROM countries_new;
