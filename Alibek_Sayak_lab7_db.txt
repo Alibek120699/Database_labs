@@ -1,0 +1,10 @@
+create index cn_index on countries(name);
+
+create index ns_index on employees(name, surname);
+
+create unique index s_index on employees(salary);
+
+create index sb_index on employees(name);
+
+create index ed_index on employees(employees.department_id, employees.salary)
+include(department.department_id, department.budget);
